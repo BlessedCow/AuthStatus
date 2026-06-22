@@ -376,6 +376,15 @@ def render_backup_sidebar() -> None:
 def main() -> None:
     st.set_page_config(page_title="Local Auth Status Tracker", layout="wide")
 
+    if 'disclaimer_accepted' not in st.session_state:
+        st.warning("⚠️ **Disclaimer**: This tool is not HIPAA-compliant out-of-box. "
+                   "See DISCLAIMER.md before handling PHI.")
+        if st.button("I Understand"):
+            st.session_state.disclaimer_accepted = True
+            st.rerun()
+        st.stop()
+
+    
     init_db()
     auto_import_json_if_empty()
 
